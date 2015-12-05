@@ -1,0 +1,53 @@
+#pragma once
+
+#include "stdafx.h"
+#include <cv.h>
+
+#include "optutil.h"
+
+using namespace cv;
+using namespace std;
+
+void drawFlowWithoutZero(CvPoint2D32f* cornersprev, CvPoint2D32f* cornerscurr, IplImage* imgdst, bool isleft);
+
+void drawFlowWithoutZero(CvMat* velx, CvMat* vely, IplImage* imgdst);
+
+void drawFlowWithoutZero(Mat flow, Mat &framedst);
+
+/*
+*  Method:     drawFlowForFeatureCvPoint
+*  Description: 在imgdst图像帧上画光�?
+*  Returns:    void. 
+*  CvPoint2D32f * cornersprev: Required = true. X方向光流. 
+*  CvPoint2D32f * cornerscurr: Required = true. Y方向光流.
+*  IplImage * imgdst: Required = true. 目标图像�?
+*/
+void drawFlowForFeatureCvPoint(CvPoint2D32f* cornersprev_11, CvPoint2D32f* cornerscurr_11, IplImage* imgdst, bool isleft = true);
+
+/*
+*  Method:     drawFlowForDenseCvMat
+*  Description: 在imgdst图像帧上画光�?
+*  Returns:    void. 
+*  CvMat * velx: Required = true. X方向光流. 
+*  CvMat * vely: Required = true. Y方向光流. 
+*  IplImage * imgdst: Required = true. 目的图像�?
+*/
+void drawFlowForDenseCvMat(CvMat* velx, CvMat* vely, IplImage* imgdst);
+
+/*
+*  Method:     drawFlowForDenseMat
+*  Description: 在framedst图像帧上画光�? 
+*  Returns:    void. 
+*  Mat flow: Required = true. 光流. 
+*  Mat framedst: Required = true. 目标图像�?
+*/
+void drawFlowForDenseMat(Mat flow, Mat &framedst);
+
+void drawArrow(CvPoint p, CvPoint q, IplImage* imgdst, CvScalar rgb = CV_RGB(0,0,255) , int thickness = 1);
+
+void drawArrow(CvPoint p, CvPoint q, Mat &framedst, CvScalar rgb = CV_RGB(0,0,255) , int thickness = 1);
+
+#ifndef util_DRAW_FLOW_
+#define util_DRAW_FLOW_
+
+#endif
