@@ -130,6 +130,7 @@ class my_ardrone_node{
         if(result == -2){
 			tag_timer++;
 			fprintf(out, "%d=====>\n", tag_timer);
+			printf("%d=====>\n", tag_timer);
 			if(tag_timer > T && tag == 1){
 				//tag_timer = 0;
  				tag = -1;
@@ -142,7 +143,7 @@ class my_ardrone_node{
 				sim_timer = 0;
 				tag_timer = 0;
 			}
-            fly(0.5,0,0,0,0,-result*0.1);
+            fly(0.3,0,0,0,0,-result*0.3);
 	    }else if(result >= -0.6 && result <= 0.6){
 			sim_timer++;
 			if(sim_timer > 7){
@@ -150,15 +151,16 @@ class my_ardrone_node{
 				sim_timer = 0;
 				tag_timer = 0;
 			}
-			fly(0.2,0,0,0,0,-result*0.1);	
+			fly(0.2,0,0,0,0,-result*0.3);	
 		}else{
 			sim_timer++;
+			printf("%d=====>\n", tag_timer);
 			if(sim_timer > 7){
 				tag = 1;
 				sim_timer = 0;
 				tag_timer = 0;
 			}
-			fly(0.1, 0, 0, 0, 0, -result*0.1);
+			fly(0.1, 0, 0, 0, 0, -result*0.3);
         }
 
         }

@@ -8,7 +8,7 @@
 #include "optfeatureutil.h"
 #include "optmatutil.h"
 #include "motioncolor.h"
-#include "optdrawflow.h"
+//#include "optdrawflow.h"
 
 using namespace cv;
 using namespace std;
@@ -73,7 +73,8 @@ float imgStrategic(ImgFunType funtype, IplImage* imgprev, IplImage* imgcurr, Ipl
 	float result  = 0;
 	if ((strategic >> 0 & 1) == 1) //balance
 	{
-		result = balanceForDenseCvMat(velx, vely, imgdst, k);
+		//result = balanceForDenseCvMat(velx, vely, imgdst, k);
+		result = safeAreaForDenseCvMat(velx, vely, imgdst, k);
 		printf("balance result : %lf\n", result);
 	}    
 	if ((strategic >> 1 & 1) == 1) //draw optflow with grap

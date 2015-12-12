@@ -74,6 +74,7 @@ float imgStrategic(ImgFunType funtype, IplImage* imgprev, IplImage* imgcurr, Ipl
 	if ((strategic >> 0 & 1) == 1) //balance
 	{
 		result = balanceForDenseCvMat(velx, vely, imgdst, k);
+		//result = safeAreaForDenseCvMat(velx, vely, imgdst, k);
 		printf("balance result : %lf\n", result);
 	}    
 	if ((strategic >> 1 & 1) == 1) //draw optflow with grap

@@ -191,6 +191,52 @@ float ttcForDenseCvMat(CvMat* vely, int foeY, float *ttc){
 	}
 	return sum/(vely->width);
 }
+/********************************
+/*利用障碍物间隙
+*********************************/
+float safeAreaForDenseCvMat(CvMat* velx, CvMat* vely, IplImage* imgdst, float k){
+	float * ttc = (float*)malloc(COLS*sizeof(float));
+	int * tagSafe = (int*)malloc(COLS*sizeof(float)); 
+	Vec2i foe = foeForDenseCvMat2(velx, vely);
+	float ttcAvg = ttcForDenseCvMat(vely, foe[1], ttc);
+	tagSafeAreaByTTC(COLS, ttc, ttcAvg , k, tagSafe);
+	float result = 0;
+	
+	int safel = -1;
+	int safer = -1;
+	int safem = -1;
+	int safevalue = 0;
+	int tempvalue = 0;
+	int i = 0;
+	int flag = 0;
+	for(i = 0; i < COLS; i++){
+		if(tagSafe[i] == 1){
+			tempvalue++;
+			safer = i;
+			if(safel == -1){
+				safer = i;
+			}
+			if(tempvalue > safevalue){
+				safevalue = tempvalue;
+				safem = (safer+safel)/2;
+			}	
+		}else{
+			flag++;
+			if(flag >= 3){
+				safer = -1;
+				safel = -1;
+				tempvalue = 0;
+			}
+		}
+	}
+	bool isBig = isBigObstacle(imgdst, velx);
+	if(isBig || safevalue < (COLS/3)){
+		result = -200;
+	}else{
+		result = 2*safem/COLS - 1;
+	}
+	return result;
+}
 
 //利用左右光流平衡返回左1右2前3停止4
 float balanceForDenseCvMat(CvMat* velx, CvMat* vely, IplImage* imgdst,  float k, int px, int py){
